@@ -487,7 +487,8 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
         		} catch ( Exception $e ) {
                     //catch exception
                     wp_mail( get_bloginfo( 'admin_email' ), sprintf( __( 'PagSeguro %s Checkout Error', 'edd-pagseguro-gateway' ), ucwords( $country ) ), $e->getMessage() );
-                 	edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
+                 	edd_set_error( 'pagseguro_exception', $e->getMessage() );
+                    edd_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['edd-gateway'] );
                 }
 
             }
