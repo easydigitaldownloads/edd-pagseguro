@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: EDD PagSeguro Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-01 19:16-0300\n"
+"PO-Revision-Date: 2013-05-20 13:17-0300\n"
+"Last-Translator: Matt Varone <plugins@mattvarone.com>\n"
+"Language-Team: Matt Varone <contact@mattvarone.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: edd-pagseguro-gateway.php:127
+msgid "get it here"
+msgstr "pegue aqui"
+
+#: edd-pagseguro-gateway.php:130
+msgid "IPN settings"
+msgstr "Configurações IPN"
+
+#: edd-pagseguro-gateway.php:135
+msgid "PagSeguro Settings"
+msgstr "Configurações PagSeguro"
+
+#: edd-pagseguro-gateway.php:136
+msgid "Configure your PagSeguro Settings"
+msgstr "Ajuste suas configurações PagSeguro"
+
+#: edd-pagseguro-gateway.php:141
+msgid "IMPORTANT"
+msgstr "IMPORTANTE"
+
+#: edd-pagseguro-gateway.php:142
+msgid ""
+"PagSeguro only supports payments in Brazilian Reals ( BRL ). This Gateway "
+"does not support the test mode account, all payments will be processed live."
+msgstr ""
+"PagSeguro suporta apenas Real Brasileiro ( BRL ). Este método de pagamento "
+"não tem suporte ao modo teste, todos os pagamentos serão processados como "
+"válidos."
+
+#: edd-pagseguro-gateway.php:147
+msgid "IPN"
+msgstr "IPN"
+
+#: edd-pagseguro-gateway.php:148
+#, php-format
+msgid "Set your PagSeguro %s to notify this URL: %s"
+msgstr ""
+"Coloque suas configurações IPN PagSeguro %s para notificar esta url: %s"
+
+#: edd-pagseguro-gateway.php:153
+msgid "Client Email"
+msgstr "Email da conta"
+
+#: edd-pagseguro-gateway.php:154
+msgid "Enter your PagSeguro client email"
+msgstr "Coloque seu email da conta do PagSeguro"
+
+#: edd-pagseguro-gateway.php:160
+msgid "Client Token"
+msgstr "Token da conta"
+
+#: edd-pagseguro-gateway.php:161
+#, php-format
+msgid "Enter your PagSeguro client token ( %s )"
+msgstr "Coloque o seu Token de cliente PagSeguro (%s)"
+
+#: edd-pagseguro-gateway.php:246
+msgid ""
+"Thanks for completing the checkout. <strong>Your Payment is in pending mode</"
+"strong>. Please complete the process with PagSeguro to access your purchased "
+"files."
+msgstr ""
+"Obrigado por completar a compra. <strong>Seu pagamento está como pendente no "
+"momento</strong>. Favor complete o pagamento com o PagSeguro."
+
+#: edd-pagseguro-gateway.php:323
+msgid "PagSeguro IPN Service Error"
+msgstr "Erro no Serviço IPN PagSeguro"
+
+#: edd-pagseguro-gateway.php:354
+msgid "Please enter your PagSeguro Client Email and Token in settings"
+msgstr "Favor coloque seu email e Token PagSeguro nas configurações."
+
+#: edd-pagseguro-gateway.php:433
+#, php-format
+msgid "PagSeguro %s Checkout Error"
+msgstr "Erro na transação PagSeguro %s"
