@@ -417,7 +417,7 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
         		'date'          => $purchase_data['date'],
         		'user_email'    => $purchase_data['user_email'],
         		'purchase_key'  => $purchase_data['purchase_key'],
-        		'currency'      => $edd_options['currency'],
+        		'currency'      => edd_get_option( 'currency', 'BRL' ),
         		'downloads'     => $purchase_data['downloads'],
         		'user_info'     => $purchase_data['user_info'],
         		'cart_details'	=> $purchase_data['cart_details'],
@@ -446,19 +446,19 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
         		$paymentRequest->setCurrency( 'BRL' );
 
                 // cart summary
-                $cart_summary = edd_get_purchase_summary($purchase_data, false);
+                $cart_summary = edd_get_purchase_summary( $purchase_data, false );
 
                 // format total price
                 $total_price = number_format( $purchase_data['price'], 2, '.', '' );
 
         		// payment request details
-                $paymentRequest->addItem( '01', html_entity_decode( substr( $cart_summary, 0, 95 ), ENT_COMPAT, 'UTF-8' ), '1', strval( $total_price ) );
+                $paymentRequest->addItem( '01', sanitize_text_field( substr( $cart_summary, 0, 95 ) ), ENT_COMPAT, 'UTF-8' ), '1', strval( $total_price ) );
 
         		// sets the reference code for this request
         		$paymentRequest->setReference( $payment );
 
         		// sets customer information
-        		$paymentRequest->setSender( $purchase_data['user_info']['first_name'] . ' ' . $purchase_data['user_info']['last_name'], $purchase_data['user_email'] );
+        		$paymentRequest->setSender( sanitize_text_field( $purchase_data['user_info']['first_name'] . ' ' . $purchase_data['user_info']['last_name'] ), $purchase_data['user_email'] );
 
                 // redirect url
         		$paymentRequest->setRedirectUrl( add_query_arg( 'payment-confirmation', 'pagseguro', get_permalink( $edd_options['success_page'] ) ) );
