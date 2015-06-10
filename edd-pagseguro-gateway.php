@@ -452,7 +452,7 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
                 $total_price = number_format( $purchase_data['price'], 2, '.', '' );
 
         		// payment request details
-                $paymentRequest->addItem( '01', sanitize_text_field( substr( $cart_summary, 0, 95 ) ), ENT_COMPAT, 'UTF-8' ), '1', strval( $total_price ) );
+                $paymentRequest->addItem( '01', sanitize_text_field( substr( $cart_summary, 0, 95 ) ), '1', strval( $total_price ) );
 
         		// sets the reference code for this request
         		$paymentRequest->setReference( $payment );
