@@ -461,7 +461,7 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
         		$paymentRequest->setSender( sanitize_text_field( $purchase_data['user_info']['first_name'] . ' ' . $purchase_data['user_info']['last_name'] ), $purchase_data['user_email'] );
 
                 // redirect url
-        		$paymentRequest->setRedirectUrl( add_query_arg( 'payment-confirmation', 'pagseguro', get_permalink( $edd_options['success_page'] ) ) );
+        		$paymentRequest->setRedirectUrl( add_query_arg( 'payment-confirmation', 'pagseguro', edd_get_success_page_uri() ) );
 
         	    /* TRY CHECKOUT */
 
