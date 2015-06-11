@@ -463,6 +463,9 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
                 // redirect url
         		$paymentRequest->setRedirectUrl( add_query_arg( 'payment-confirmation', 'pagseguro', edd_get_success_page_uri() ) );
 
+                // IPN URL
+                $paymentRequest->addParameter( 'notificationURL', get_site_url() );
+
         	    /* TRY CHECKOUT */
 
         	    try {
