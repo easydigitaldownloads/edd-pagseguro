@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - PagSeguro Payment Gateway
 Plugin URL: http://easydigitaldownloads.com/extension/pagseguro
 Description: Adds the PagSeguro Gateway to Easy Digital Downloads
-Version: 1.4.3
+Version: 1.4.4
 Author: Pippin Williamson
 Author URI: http://www.mattvarone.com
 */
@@ -79,12 +79,13 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
 
 			// process payments
 			add_action( 'edd_gateway_pagseguro', array( &$this, 'process_payment' ) );
+			add_filter( 'edd_purchase_form_required_fields', array( $this, 'require_last_name' ) );
 
 			// fire init method
 			add_action( 'init', array( &$this, 'init' ), -1 );
 
 			if( class_exists( 'EDD_License' ) ) {
-				$license = new EDD_License( __FILE__, 'PagSeguro Payment Gateway', '1.4.3', 'Pippin Williamson' );
+				$license = new EDD_License( __FILE__, 'PagSeguro Payment Gateway', '1.4.4', 'Pippin Williamson' );
 			}
 		}
 
@@ -496,6 +497,16 @@ if ( ! class_exists( 'EDD_PagSeguro_Gateway' ) )
 
 			}
 
+		}
+
+		public function require_last_name( $required ) {
+
+			$required['edd_last'] = array(
+				'error_id' => 'invalid_last_name',
+				'error_message' => __( 'Please enter your last name', 'edd-pagseguro-gateway' )
+			);
+
+			return $required;
 		}
 
 	} // EDD_PagSeguro_Gateway
