@@ -142,7 +142,6 @@ class LogPagSeguro
         }
 
         try {
-
             $file = fopen(self::$fileLocation, "a");
 
             if (!$file) {

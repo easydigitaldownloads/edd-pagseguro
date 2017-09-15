@@ -23,7 +23,7 @@
 
 /***
  * Provides a means to retrieve configuration preferences.
- * These preferences can come from the default config file (PagSeguroLibrary/config/PagSeguroConfig.php).
+ * These preferences can come from the default config file (PagSeguroLibrary/config/PagSeguroConfigWrapper.php).
  */
 
 class PagSeguroConfig
@@ -36,9 +36,10 @@ class PagSeguroConfig
     {
         define('ALLOW_PAGSEGURO_CONFIG', true);
 
-        if(!class_exists('PagSeguroConfigWrapper'))
+        if (!class_exists('PagSeguroConfigWrapper')) {
             require_once PagSeguroLibrary::getPath() .
-                DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "PagSeguroConfig.php";
+                DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "PagSeguroConfigWrapper.php";
+        }
 
         $wrapper = new PagSeguroConfigWrapper();
 
@@ -64,7 +65,7 @@ class PagSeguroConfig
             if (isset(self::$data[$key1][$key2])) {
                 return self::$data[$key1][$key2];
             } else {
-                throw new Exception("Config keys {$key1}, {$key2} not found.");
+                throw new Exception("Keys {$key1}, {$key2} not found.");
             }
         } else {
             if (isset(self::$data[$key1])) {
@@ -80,7 +81,7 @@ class PagSeguroConfig
         if (isset(self::$data[$key1][$key2])) {
             self::$data[$key1][$key2] = $value;
         } else {
-            throw new Exception("Config keys {$key1}, {$key2} not found.");
+            throw new Exception("Keys {$key1}, {$key2} not found.");
         }
     }
 
@@ -95,7 +96,6 @@ class PagSeguroConfig
             isset(self::$data['credentials']['appId'][self::$data['environment']]) &&
             isset(self::$data['credentials']['appKey'][self::$data['environment']])
         ) {
-            
             return new PagSeguroApplicationCredentials(
                 self::$data['credentials']['appId'][self::$data['environment']],
                 self::$data['credentials']['appKey'][self::$data['environment']]
@@ -111,7 +111,6 @@ class PagSeguroConfig
             isset(self::$data['credentials']['email']) &&
             isset(self::$data['credentials']['token'][self::$data['environment']])
         ) {
-            
             return new PagSeguroAccountCredentials(
                 self::$data['credentials']['email'],
                 self::$data['credentials']['token'][self::$data['environment']]
@@ -195,8 +194,8 @@ class PagSeguroConfig
 
         $version = str_replace('.', '', phpversion());
 
-        if ($version < 533) {
-            $requirements['version'] = 'PagSeguroLibrary: PHP version 5.3.3 or greater is required.';
+        if ($version < 5427) {
+            $requirements['version'] = 'PagSeguroLibrary: PHP version 5.4.27 or greater is required.';
         }
 
         if (!function_exists('spl_autoload_register')) {

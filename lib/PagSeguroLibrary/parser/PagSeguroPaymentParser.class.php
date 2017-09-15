@@ -33,9 +33,16 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
      */
     public static function getData($payment)
     {
-
+        
         $data = null;
 
+        // pre-approval
+        if (property_exists($payment, 'preApproval')) {
+            if ($payment->getPreApproval() != null) {
+                $data = PagSeguroPreApprovalParser::getData($payment->getPreApproval());
+            }
+        }
+       
         // reference
         if ($payment->getReference() != null) {
             $data["reference"] = $payment->getReference();
@@ -43,7 +50,6 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
 
         // sender
         if ($payment->getSender() != null) {
-
             if ($payment->getSender()->getName() != null) {
                 $data['senderName'] = $payment->getSender()->getName();
             }
@@ -68,13 +74,15 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
                 if (is_array($documents) && count($documents) == 1) {
                     foreach ($documents as $document) {
                         if (!is_null($document)) {
-                            $data['senderCPF'] = $document->getValue();
+                            $document->getType() == "CPF" ? 
+                                $data['senderCPF'] = $document->getValue() : 
+                                $data['senderCNPJ'] = $document->getValue();
                         }
                     }
                 }
             }
 
-             if ($payment->getSender()->getIP() != null) {
+            if ($payment->getSender()->getIP() != null) {
                 $data['ip'] = $payment->getSender()->getIP();
             }
         }
@@ -87,7 +95,6 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
         // items
         $items = $payment->getItems();
         if (count($items) > 0) {
-
             $i = 0;
 
             foreach ($items as $key => $value) {
@@ -121,7 +128,6 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
 
         // shipping
         if ($payment->getShipping() != null) {
-
             if ($payment->getShipping()->getType() != null && $payment->getShipping()->getType()->getValue() != null) {
                 $data['shippingType'] = $payment->getShipping()->getType()->getValue();
             }
@@ -200,7 +206,9 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
             $i = 0;
             foreach ($payment->getPaymentMethodConfig()->getConfig() as $config) {
                 if ($config instanceof PagSeguroPaymentMethodConfigItem) {
-                    if (!PagSeguroHelper::isEmpty($config->getKey()) && !PagSeguroHelper::isEmpty($config->getValue())) {
+                    if (!PagSeguroHelper::isEmpty($config->getKey())
+                        && !PagSeguroHelper::isEmpty($config->getValue()))
+                    {
                         $i++;
                         if (!PagSeguroHelper::isEmpty($config->getGroup())) {
                             $data['paymentMethodGroup' . $i] = $config->getGroup();
@@ -208,6 +216,21 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
                         $data['paymentMethodConfigKey' . $i . "_1"] = $config->getKey();
                         $data['paymentMethodConfigValue' . $i . "_1"] = $config->getValue();
                     }
+                }
+            }
+        }
+
+        // AcceptedPaymentMethod
+        if (count($payment->getAcceptedPaymentMethod()->getConfig()) > 0) {
+            $i = 0;
+            foreach ($payment->getAcceptedPaymentMethod()->getConfig() as $acceptedPayment) {
+                if ($acceptedPayment instanceof PagSeguroAcceptPaymentMethod) {
+                    $data['acceptPaymentMethodGroup'] = $acceptedPayment->getGroup();
+                    $data['acceptPaymentMethodName'] = $acceptedPayment->getName();
+                }
+                if ($acceptedPayment instanceof PagSeguroExcludePaymentMethod) {
+                    $data['excludePaymentMethodGroup'] = $acceptedPayment->getGroup();
+                    $data['excludePaymentMethodName'] = $acceptedPayment->getName();
                 }
             }
         }
@@ -226,6 +249,7 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
                 }
             }
         }
+
         return $data;
     }
 
@@ -237,20 +261,7 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
     {
         $parser = new PagSeguroXmlParser($str_xml);
         $data = $parser->getResult('checkout');
-        $PaymentParserData = new PagSeguroPaymentParserData();
-        $PaymentParserData->setCode($data['code']);
-        $PaymentParserData->setRegistrationDate($data['date']);
-        return $PaymentParserData;
-    }
-
-    /***
-     * @param $str_xml
-     * @return parsed credit card brand
-     */
-     public static function readCCBRandXml($str_xml)
-    {
-        $parser = new PagSeguroXmlParser($str_xml);
-        $PaymentParserData = new PagSeguroPaymentParserData();
+        $PaymentParserData = new PagSeguroParserData();
         $PaymentParserData->setCode($data['code']);
         $PaymentParserData->setRegistrationDate($data['date']);
         return $PaymentParserData;
@@ -264,7 +275,7 @@ class PagSeguroPaymentParser extends PagSeguroServiceParser
     {
         $parser = new PagSeguroXmlParser($str_xml);
         $data = $parser->getResult('transaction');
-        $PaymentParserData = new PagSeguroPaymentParserData();
+        $PaymentParserData = new PagSeguroParserData();
         $PaymentParserData->setCode($data['code']);
         $PaymentParserData->setRegistrationDate($data['date']);
         return $PaymentParserData;
