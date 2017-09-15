@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - PagSeguro Payment Gateway
 Plugin URL: http://easydigitaldownloads.com/extension/pagseguro
 Description: Adds the PagSeguro Gateway to Easy Digital Downloads
-Version: 1.4.4
+Version: 1.4.5
 Author: Pippin Williamson
 Author URI: http://www.mattvarone.com
 */
