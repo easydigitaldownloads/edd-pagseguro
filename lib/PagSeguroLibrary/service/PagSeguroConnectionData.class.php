@@ -318,6 +318,4 @@ class PagSeguroConnectionData
     {
         $this->charset = $charset;
     }
-
-
 }

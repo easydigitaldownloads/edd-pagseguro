@@ -24,10 +24,22 @@
 class PagSeguroResources
 {
 
+    /**
+     * @var
+     */
     private static $resources;
+    /**
+     * @var
+     */
     private static $data;
+    /**
+     *
+     */
     const VAR_NAME = 'PagSeguroResources';
 
+    /**
+     * @throws Exception
+     */
     private function __construct()
     {
         define('ALLOW_PAGSEGURO_RESOURCES', true);
@@ -42,6 +54,9 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @return PagSeguroResources
+     */
     public static function init()
     {
         if (self::$resources == null) {
@@ -50,6 +65,12 @@ class PagSeguroResources
         return self::$resources;
     }
 
+    /**
+     * @param $key1
+     * @param null $key2
+     * @return mixed
+     * @throws Exception
+     */
     public static function getData($key1, $key2 = null)
     {
         if ($key2 != null) {
@@ -67,6 +88,12 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @param $key1
+     * @param $key2
+     * @param $value
+     * @throws Exception
+     */
     public static function setData($key1, $key2, $value)
     {
         if (isset(self::$data[$key1][$key2])) {
@@ -76,9 +103,14 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @param $environment
+     * @return mixed
+     * @throws Exception
+     */
     public static function getWebserviceUrl($environment)
     {
-        if (isset(self::$data['webserviceUrl']) && 
+        if (isset(self::$data['webserviceUrl']) &&
             isset(self::$data['webserviceUrl'][$environment])
         ) {
             return self::$data['webserviceUrl'][$environment];
@@ -87,6 +119,11 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @param $environment
+     * @return mixed
+     * @throws Exception
+     */
     public static function getPaymentUrl($environment)
     {
         if (isset(self::$data['paymentService']) && isset(self::$data['paymentService']['baseUrl']) &&
@@ -98,7 +135,12 @@ class PagSeguroResources
         }
     }
 
-     public static function getBaseUrl($environment)
+    /**
+     * @param $environment
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getBaseUrl($environment)
     {
         if (isset(self::$data['baseUrl']) &&
             isset(self::$data['baseUrl'][$environment])
@@ -109,6 +151,11 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @param $environment
+     * @return mixed
+     * @throws Exception
+     */
     public static function getStaticUrl($environment)
     {
         if (isset(self::$data['staticUrl']) &&
@@ -120,9 +167,13 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public static function getInstallmentUrl()
-    {   
-        if (isset(self::$data['installmentService']) && 
+    {
+        if (isset(self::$data['installmentService']) &&
             isset(self::$data['installmentService']['url'])
         ) {
             return self::$data['installmentService']['url'];
@@ -131,6 +182,10 @@ class PagSeguroResources
         }
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public static function getAuthorizationUrl()
     {
         if (isset(self::$data['authorizationService']) &&
@@ -138,13 +193,17 @@ class PagSeguroResources
         ) {
             return self::$data['authorizationService']['servicePath'];
         } else {
-            throw new Exception("Authorization service path URL not found");
+               throw new Exception("Authorization service path URL not found");
         }
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public static function getSessionUrl()
-    {   
-        if (isset(self::$data['sessionService']) && 
+    {
+        if (isset(self::$data['sessionService']) &&
             isset(self::$data['sessionService']['url'])
         ) {
             return self::$data['sessionService']['url'];

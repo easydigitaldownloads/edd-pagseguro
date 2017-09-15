@@ -125,11 +125,10 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
         if (isset($data["cancellationSource"])) {
             $transaction->setCancellationSource(
                 new PagSeguroTransactionCancellationSource($data["cancellationSource"])
-            );  
+            );
         }
 
         if (isset($data["paymentMethod"]) && is_array($data["paymentMethod"])) {
-
             // <transaction> <paymentMethod>
             $paymentMethod = new PagSeguroPaymentMethod();
 
@@ -213,7 +212,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
 
         //<transaction><items>
         if (isset($data["items"]['item']) && is_array($data["items"]['item'])) {
-
             $items = array();
             $i = 0;
 
@@ -232,7 +230,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
         }
 
         if (isset($data["sender"])) {
-
             // <transaction> <sender>
             $sender = new PagSeguroSender();
 
@@ -247,7 +244,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
             }
 
             if (isset($data["sender"]["phone"])) {
-
                 // <transaction> <sender> <phone>
                 $phone = new PagSeguroPhone();
 
@@ -266,7 +262,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
 
             // <transaction><sender><documents>
             if (isset($data["sender"]['documents']) && is_array($data["sender"]['documents'])) {
-
                 $documents = $data["sender"]['documents'];
                 if (count($documents) > 0) {
                     foreach ($documents as $document) {
@@ -279,7 +274,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
         }
 
         if (isset($data["shipping"]) && is_array($data["shipping"])) {
-
             // <transaction> <shipping>
             $shipping = new PagSeguroShipping();
 
@@ -294,7 +288,6 @@ class PagSeguroTransactionParser extends PagSeguroServiceParser
             }
 
             if (isset($data["shipping"]["address"]) && is_array($data["shipping"]["address"])) {
-
                 // <transaction> <shipping> <address>
                 $address = new PagSeguroAddress();
 
